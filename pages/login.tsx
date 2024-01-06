@@ -10,8 +10,8 @@ import {
 import { auth } from "../utils/firebase";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { useRouter } from "next/router";
-import Navbar from "./components/Navbar";
-import HomePage from "./components/Homepage";
+import Navbar from "../components/Navbar";
+import HomePage from "../components/Homepage";
 
 const Login = () => {
   // const [user, loading] = useAuthState(auth);

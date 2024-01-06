@@ -13,7 +13,7 @@ import {
   Typography,
 } from "@mui/material";
 import React, { useState, useEffect } from "react";
-import { SleepEntry } from "..";
+import { SleepEntry } from "../pages";
 import DialogTitle from "@mui/material/DialogTitle";
 import Dialog from "@mui/material/Dialog";
 

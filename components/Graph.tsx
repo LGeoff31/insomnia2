@@ -10,7 +10,7 @@ import {
   Legend,
 } from "chart.js";
 import { Line } from "react-chartjs-2";
-import { SleepEntry } from "..";
+import { SleepEntry } from "../pages";
 import { Box, Stack, Typography } from "@mui/material";
 import { BarGraph } from "./BarGraph";
 

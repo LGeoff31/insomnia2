@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
-import Display from "./components/Display";
+import Display from "../components/Display";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "../utils/firebase";
 import { SleepEntry } from ".";
-import Navbar from "./components/Navbar";
+import Navbar from "../components/Navbar";
 import { Grid } from "@mui/material";
 
 const FormData = () => {

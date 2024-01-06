@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
-import Navbar from "./components/Navbar";
-import Graph from "./components/Graph";
+import Navbar from "../components/Navbar";
+import Graph from "../components/Graph";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "../utils/firebase";
-import Statistics from "./components/Statistics";
+import Statistics from "../components/Statistics";
 import { Box, Stack } from "@mui/material";
 
 export interface SleepEntry {

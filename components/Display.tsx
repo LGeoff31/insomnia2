@@ -15,9 +15,9 @@ import {
   Typography,
 } from "@mui/material";
 import React, { useEffect, useState } from "react";
-import { SleepEntry } from "..";
+import { SleepEntry } from "../pages";
 import { useAuthState } from "react-firebase-hooks/auth";
-import { auth } from "../../utils/firebase";
+import { auth } from "../utils/firebase";
 
 import { format, parseISO } from "date-fns";
 
