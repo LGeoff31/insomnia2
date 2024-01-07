@@ -27,6 +27,8 @@ const Footer = () => {
       </Typography>
       <Stack direction="row" margin="0 auto" gap="1rem">
         <Link
+          href="https://github.com/LGeoff31/insomnia2"
+          target="_blank"
           sx={{
             color: "black",
             textDecoration: "none",
@@ -40,6 +42,8 @@ const Footer = () => {
           <GitHubIcon style={{ fontSize: "2rem" }} />
         </Link>
         <Link
+          target="_blank"
+          href="http://geoffreylee.me/"
           sx={{
             color: "black",
             textDecoration: "none",
@@ -52,9 +56,12 @@ const Footer = () => {
           <WebIcon style={{ fontSize: "2rem" }} />
         </Link>
         <Link
+          href="https://www.linkedin.com/in/lgeoff31/"
+          target="_blank"
           sx={{
             color: "black",
             textDecoration: "none",
+
             "&:hover": {
               textDecoration: "underline",
               cursor: "pointer",
