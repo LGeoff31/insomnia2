@@ -17,7 +17,7 @@ import {
   subDays,
   parseISO,
 } from "date-fns";
-import { Box } from "@mui/material";
+import { Box, Divider } from "@mui/material";
 
 ChartJS.register(
   CategoryScale,
@@ -41,6 +41,7 @@ export const option1 = {
       position: "top" as const,
     },
     title: {
+      color: "black",
       display: true,
       text: "Sleep Hours: Days of the week",
       font: {
@@ -72,6 +73,7 @@ export const option2 = {
       position: "top" as const,
     },
     title: {
+      color: "black",
       display: true,
       text: "Factors of Sleep: Days of the week",
       font: {
@@ -184,7 +186,6 @@ export function BarGraph({
         break;
     }
   }
-  console.log("hoursperday", hoursPerDay);
   for (let j = 0; j < hoursPerDay.length; j++) {
     if (hoursPerDay[j] != 0) {
       hoursPerDay[j] /= frequencyPerDay[j];
@@ -241,9 +242,22 @@ export function BarGraph({
   };
 
   return (
-    <Box sx={{ background: "#bedce8" }}>
-      <Bar style={{ marginTop: "4rem" }} options={option1} data={data1} />
-      <Bar style={{ marginTop: "4rem" }} options={option2} data={data2} />
+    <Box
+      sx={{
+        width: { md: "80vw", xs: "100vw" },
+        height: "100%",
+        background: "#bedce8",
+        padding: { md: "2rem", xs: "0rem" },
+        m: "0 auto",
+        borderRadius: "1rem",
+        boxShadow: "0px 0px 25px -6px rgba(0,0,0,0.65)",
+      }}
+    >
+      <Box sx={{ background: "#bedce8" }}>
+        <Bar style={{ marginBottom: "2rem" }} options={option2} data={data2} />
+        <Divider />
+        <Bar style={{ marginTop: "2rem" }} options={option1} data={data1} />
+      </Box>
     </Box>
   );
 }

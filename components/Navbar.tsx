@@ -15,6 +15,7 @@ import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "../utils/firebase";
 import { useRouter } from "next/router";
 import { FcGoogle } from "react-icons/fc";
+import { GiNightSleep } from "react-icons/gi";
 import {
   GoogleAuthProvider,
   signInWithPopup,
@@ -42,7 +43,7 @@ const Navbar = () => {
   };
 
   if (loading) return <h1>Loading...</h1>;
-  if (!user) route.push("/login");
+  // if (!user) route.push("/login");
   return (
     <>
       <Box
@@ -61,26 +62,35 @@ const Navbar = () => {
             sx={{
               alignItems: "center",
               textDecoration: "none",
-              padding: "1rem",
+              paddingLeft: "1rem",
+              paddingRight: "1rem",
+              paddingTop: "0.3rem",
+              paddingBottom: "0.3rem",
+
+              marginLeft: { md: "2rem", xs: "1rem" },
+
               "&:hover": {
                 textDecoration: "none",
                 backgroundColor: "rgba(0, 0, 0, 0.07)",
+                borderRadius: "0.5rem",
               },
             }}
           >
             <Typography
+              // color="#052A42"
               color="black"
-              fontWeight="bold"
+              // fontWeight="400"
               fontSize={{ md: "1.5rem", xs: "0.75rem" }}
-              // marginLeft="1.5rem"
+              alignItems="center"
+              display={{ md: "flex", xs: "block" }}
             >
-              Insomnia
+              <GiNightSleep style={{ fontSize: "2rem" }} />
             </Typography>
           </Link>
         </Stack>
         <Stack
           direction="row"
-          gap={{ md: "1rem", sm: "0.75rem", xs: "0.5rem" }}
+          gap={{ md: "1rem", sm: "0.75rem", xs: "0.2rem" }}
           alignItems={"center"}
         >
           {user && (
@@ -89,15 +99,23 @@ const Navbar = () => {
               fontSize={{ md: "1.5rem", xs: "0.75rem" }}
               sx={{
                 textDecoration: "none",
-                color: "#052A42",
-                padding: { md: "1rem", xs: "1rem" },
+                color: "black",
+
+                // padding: { md: "1rem", xs: "1rem" },
+                paddingLeft: "1rem",
+                paddingRight: "1rem",
+                paddingTop: "0.3rem",
+                paddingBottom: "0.3rem",
                 "&:hover": {
                   textDecoration: "none",
                   backgroundColor: "rgba(0, 0, 0, 0.07)",
+                  borderRadius: "0.5rem",
                 },
               }}
             >
-              Form
+              <Typography sx={{ fontSize: { md: "1rem", xs: "0.75rem" } }}>
+                Form
+              </Typography>
             </Link>
           )}
           {user && (
@@ -106,14 +124,22 @@ const Navbar = () => {
               fontSize={{ md: "1.5rem", xs: "0.75rem" }}
               sx={{
                 textDecoration: "none",
-                padding: "1rem",
-                color: "#052A42",
+                // padding: "1rem",
+                paddingLeft: "1rem",
+                paddingRight: "1rem",
+                paddingTop: "0.3rem",
+                paddingBottom: "0.3rem",
+                color: "black",
+
                 "&:hover": {
                   backgroundColor: "rgba(0, 0, 0, 0.07)",
+                  borderRadius: "0.5rem",
                 },
               }}
             >
-              Data
+              <Typography sx={{ fontSize: { md: "1rem", xs: "0.75rem" } }}>
+                Data
+              </Typography>
             </Link>
           )}
           {user && (
@@ -122,14 +148,21 @@ const Navbar = () => {
               fontSize={{ md: "1.5rem", xs: "0.75rem" }}
               sx={{
                 textDecoration: "none",
-                padding: "1rem",
-                color: "#052A42",
+                paddingLeft: "1rem",
+                paddingRight: "1rem",
+                paddingTop: "0.3rem",
+                paddingBottom: "0.3rem",
+                // color: "#052A42",
+                color: "black",
                 "&:hover": {
                   backgroundColor: "rgba(0, 0, 0, 0.07)",
+                  borderRadius: "0.5rem",
                 },
               }}
             >
-              Analysis
+              <Typography sx={{ fontSize: { md: "1rem", xs: "0.75rem" } }}>
+                Analysis
+              </Typography>
             </Link>
           )}
 

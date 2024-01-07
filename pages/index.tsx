@@ -26,7 +26,7 @@ export default function Home() {
   return (
     <Grid sx={{ background: "#E1F6FF" }}>
       <title>Insomnia</title>
-      <HomePage loggedIn={true} />
+      <HomePage />
     </Grid>
   );
 }

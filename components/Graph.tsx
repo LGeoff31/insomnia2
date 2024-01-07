@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -11,8 +11,24 @@ import {
 } from "chart.js";
 import { Line } from "react-chartjs-2";
 import { SleepEntry } from "../pages";
-import { Box, Stack, Typography } from "@mui/material";
+import {
+  Alert,
+  Box,
+  Button,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  DialogTitle,
+  Divider,
+  Grid,
+  Stack,
+  TextField,
+  Typography,
+} from "@mui/material";
 import { BarGraph } from "./BarGraph";
+import { useAuthState } from "react-firebase-hooks/auth";
+import { auth } from "../utils/firebase";
 
 ChartJS.register(
   CategoryScale,
@@ -27,7 +43,9 @@ ChartJS.register(
 const Graph = ({
   dataEntries,
   target,
+  fetchTarget,
 }: {
+  fetchTarget: () => Promise<void>;
   dataEntries: SleepEntry[];
   target: number;
 }) => {
@@ -52,6 +70,39 @@ const Graph = ({
     return entry.stress;
   });
 
+  const [targetSleep, setTargetSleep] = useState<number>(0);
+  const [alertOpen, setAlertOpen] = useState(false);
+  const [user] = useAuthState(auth);
+
+  // useEffect(() => {
+  //   // This effect will be triggered every time targetSleep changes
+  //   window.location.reload();
+  // }, [targetSleep]);
+  const openAlert = () => {
+    setAlertOpen(true);
+  };
+
+  const closeAlert = () => {
+    setAlertOpen(false);
+  };
+  const handleEnter = async () => {
+    setAlertOpen(false);
+    console.log(targetSleep, "FINAWFKMAWNFMAWF");
+    const formData = {
+      targetSleep: targetSleep,
+      user_id: user?.uid,
+    };
+    const response = await fetch("/api/createTarget", {
+      method: "POST",
+      body: JSON.stringify(formData),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    const dataResponse = await response.json();
+    fetchTarget();
+  };
+
   const options = {
     responsive: true,
     title: {
@@ -73,7 +124,8 @@ const Graph = ({
       },
       title: {
         display: true,
-        text: "Data Analysis",
+        text: "Analysis of Factors Affecting Sleep",
+        color: "black",
         font: {
           size: 20, // Adjust the font size here
         },
@@ -134,28 +186,77 @@ const Graph = ({
     ],
   };
 
-  return (
-    <Box
-      sx={{
-        width: { md: "80vw", xs: "100vw" },
-        height: "100%",
-        background: "#bedce8",
-        padding: { md: "2rem", xs: "0rem" },
-        m: "0 auto",
-        borderRadius: "1rem",
-        boxShadow: "0px 0px 25px -6px rgba(0,0,0,0.65)",
-      }}
-    >
-      <Line options={options} data={data} />
+  // useEffect(() => {
+  //   // Reload the page
+  //   window.location.reload();
+  // }, [targetSleep]);
 
-      <BarGraph
-        dates={dates}
-        hours={hours}
-        quality={quality}
-        exercise={exercise}
-        stress={stress}
-      />
-    </Box>
+  return (
+    <>
+      <Button
+        variant="contained"
+        sx={{
+          // color: "#052A42",
+          // marginTop: "1rem",
+          // fontWeight: "400px",
+          // fontSize: "0.75rem",
+          background: "green",
+          textTransform: "none",
+          // marginLeft: "8rem",
+          display: "flex",
+          justifyContent: "center",
+          margin: "0 auto",
+          marginBottom: "2rem",
+        }}
+        onClick={openAlert}
+      >
+        Set a Sleep Goal
+      </Button>
+      <Dialog open={alertOpen} onClose={closeAlert}>
+        <DialogTitle>Set Your Goal Number of Hours of Sleep</DialogTitle>
+        <DialogContent>
+          <TextField
+            autoFocus
+            margin="dense"
+            value={targetSleep}
+            onChange={(e) => setTargetSleep(parseInt(e.target.value))}
+            label="Ex. 8"
+            fullWidth
+            variant="standard"
+          />
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={closeAlert}>Cancel</Button>
+          <Button onClick={handleEnter}>Enter</Button>
+        </DialogActions>
+      </Dialog>
+      <Grid container justifyContent="center">
+        <Box
+          sx={{
+            width: { md: "80vw", xs: "100vw" },
+            height: { md: "80vh", xs: "50%" },
+            background: "#bedce8",
+            padding: { md: "2rem", xs: "0rem" },
+            m: "0 auto",
+            display: "flex",
+            justifyContent: "center",
+            borderRadius: "1rem",
+            boxShadow: "0px 0px 25px -6px rgba(0,0,0,0.65)",
+            marginBottom: "3rem",
+          }}
+        >
+          <Line options={options} data={data} />
+        </Box>
+        <BarGraph
+          dates={dates}
+          hours={hours}
+          quality={quality}
+          exercise={exercise}
+          stress={stress}
+        />
+        {/* </Box> */}
+      </Grid>
+    </>
   );
 };
 export default Graph;

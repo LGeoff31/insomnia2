@@ -18,9 +18,15 @@ import React, { useEffect, useState } from "react";
 import { SleepEntry } from "../pages";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "../utils/firebase";
-
+import { CiTrash } from "react-icons/ci";
 import { format, parseISO } from "date-fns";
 
+import { GiNightSleep } from "react-icons/gi";
+import { RiRunFill } from "react-icons/ri";
+import { FaRegFaceFrownOpen } from "react-icons/fa6";
+import { CiFaceSmile } from "react-icons/ci";
+import { MdOutlineDescription } from "react-icons/md";
+import { CiCalendarDate } from "react-icons/ci";
 const Display = ({
   data,
   fetchData,
@@ -61,9 +67,10 @@ const Display = ({
   return (
     <Stack
       // direction={{ md: "row", sm: "column" }}
-      alignItems={"center"}
+      // alignItems={"center"}
       // gap="3rem"
-      justifyContent={"center"}
+      // justifyContent={"center"}
+      paddingTop="2rem"
       height="100vh"
     >
       <Box
@@ -80,7 +87,7 @@ const Display = ({
         >
           <Typography
             variant="h3"
-            fontFamily={"bold"}
+            // fontFamily={"bold"}
             color="#008bE7"
             fontSize={{ md: "3rem", xs: "2rem" }}
           >
@@ -92,7 +99,7 @@ const Display = ({
         </Stack>
         <Divider />
         <TableContainer
-          style={{ maxHeight: 425, background: "", marginTop: "1rem" }}
+          style={{ maxHeight: 625, background: "", marginTop: "1rem" }}
         >
           <Table stickyHeader>
             <TableHead>
@@ -105,8 +112,9 @@ const Display = ({
                     // fontSize: "1rem",
                   }}
                 >
-                  <Typography fontSize={{ md: "1rem", xs: "0.5rem" }}>
-                    Date
+                  <Typography fontSize={{ md: "2rem", xs: "1.5rem" }}>
+                    {/* Date */}
+                    <CiCalendarDate />
                   </Typography>
                 </TableCell>
                 <TableCell
@@ -117,8 +125,9 @@ const Display = ({
                     // fontSize: "1rem",
                   }}
                 >
-                  <Typography fontSize={{ md: "1rem", xs: "0.5rem" }}>
-                    Sleep
+                  <Typography fontSize={{ md: "2rem", xs: "1.5rem" }}>
+                    {/* Sleep */}
+                    <GiNightSleep />
                   </Typography>
                 </TableCell>
                 <TableCell
@@ -129,8 +138,9 @@ const Display = ({
                     // fontSize: "1rem",
                   }}
                 >
-                  <Typography fontSize={{ md: "1rem", xs: "0.5rem" }}>
-                    Exercise
+                  <Typography fontSize={{ md: "2rem", xs: "1.5rem" }}>
+                    {/* Exercise */}
+                    <RiRunFill />
                   </Typography>
                 </TableCell>
                 <TableCell
@@ -141,8 +151,9 @@ const Display = ({
                     // fontSize: "1rem",
                   }}
                 >
-                  <Typography fontSize={{ md: "1rem", xs: "0.5rem" }}>
-                    Stress
+                  <Typography fontSize={{ md: "2rem", xs: "1.5rem" }}>
+                    {/* Stress */}
+                    <FaRegFaceFrownOpen />
                   </Typography>
                 </TableCell>
                 <TableCell
@@ -153,8 +164,9 @@ const Display = ({
                     // fontSize: "1rem",
                   }}
                 >
-                  <Typography fontSize={{ md: "1rem", xs: "0.5rem" }}>
-                    Quality
+                  <Typography fontSize={{ md: "2rem", xs: "1.5rem" }}>
+                    {/* Quality */}
+                    <CiFaceSmile />
                   </Typography>
                 </TableCell>
                 <TableCell
@@ -166,8 +178,9 @@ const Display = ({
                     display: { md: "table-cell", xs: "none" },
                   }}
                 >
-                  <Typography fontSize={{ md: "1rem", xs: "0.5rem" }}>
-                    Description
+                  <Typography fontSize={{ md: "2rem", xs: "0.5rem" }}>
+                    {/* Description */}
+                    <MdOutlineDescription />
                   </Typography>
                 </TableCell>
                 <TableCell
@@ -205,7 +218,7 @@ const Display = ({
                       fontSize: { md: "1rem", xs: "0.75rem" },
                     }}
                   >
-                    {entry.exercise} Hours
+                    {entry.exercise}/10
                   </TableCell>
                   <TableCell
                     sx={{
@@ -234,16 +247,17 @@ const Display = ({
                   </TableCell>
                   <TableCell>
                     <Button
-                      variant="contained"
-                      color="error"
+                      // variant="contained"
+                      // color="error"
                       sx={{
+                        color: "red",
                         // padding: "0.2rem",
                         textTransform: "none",
-                        fontSize: { md: "1rem", xs: "0.75rem" },
+                        fontSize: { md: "2rem", xs: "0.75rem" },
                       }}
                       onClick={() => handleDelete(entry._id)}
                     >
-                      Delete
+                      <CiTrash />
                     </Button>
                     <Snackbar
                       open={open}

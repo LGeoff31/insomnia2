@@ -107,30 +107,6 @@ const Form = ({ fetchData }: { fetchData: () => Promise<void> }) => {
     setOpen(false);
   };
 
-  const openAlert = () => {
-    setAlertOpen(true);
-  };
-
-  const closeAlert = () => {
-    setAlertOpen(false);
-  };
-  const handleEnter = async () => {
-    setAlertOpen(false);
-    console.log(targetSleep, "FINAWFKMAWNFMAWF");
-    const formData = {
-      targetSleep: targetSleep,
-      user_id: user?.uid,
-    };
-    const response = await fetch("/api/createTarget", {
-      method: "POST",
-      body: JSON.stringify(formData),
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
-    const dataResponse = await response.json();
-  };
-
   return (
     <Grid
       container
@@ -146,11 +122,15 @@ const Form = ({ fetchData }: { fetchData: () => Promise<void> }) => {
         padding="2rem"
         sx={{ background: "#d0e8f2", boxShadow: "20" }}
       >
-        <Typography variant="h2" fontFamily={"bold"} color="#008bE7">
+        <Typography variant="h2" fontWeight="400" color="#008bE7">
           Insomnia
         </Typography>
         <Divider />
-        <Typography color="#052A42" fontSize={{ md: "2rem", xs: "1.5rem" }}>
+        <Typography
+          fontSize={{ md: "2rem", xs: "1.5rem" }}
+          marginTop="1rem"
+          marginBottom="1rem"
+        >
           Record your sleep last night!
         </Typography>
         <form onSubmit={handleSubmit}>
@@ -236,25 +216,6 @@ const Form = ({ fetchData }: { fetchData: () => Promise<void> }) => {
               ]}
             />
 
-            <Dialog open={alertOpen} onClose={closeAlert}>
-              <DialogTitle>Set Your Goal Number of Hours of Sleep</DialogTitle>
-              <DialogContent>
-                <TextField
-                  autoFocus
-                  margin="dense"
-                  value={targetSleep}
-                  onChange={(e) => setTargetSleep(parseInt(e.target.value))}
-                  label="Ex. 8"
-                  fullWidth
-                  variant="standard"
-                />
-              </DialogContent>
-              <DialogActions>
-                <Button onClick={closeAlert}>Cancel</Button>
-                <Button onClick={handleEnter}>Enter</Button>
-              </DialogActions>
-            </Dialog>
-
             <TextField
               sx={{ marginTop: "1rem", marginBottom: "1rem" }}
               label="Note"
@@ -290,7 +251,8 @@ const Form = ({ fetchData }: { fetchData: () => Promise<void> }) => {
           </Stack>
         </form>
       </Box>
-      <Box
+
+      {/* <Box
         width="13rem"
         height="10%"
         borderRadius="8px"
@@ -301,8 +263,8 @@ const Form = ({ fetchData }: { fetchData: () => Promise<void> }) => {
         <Typography fontWeight="bold">Note</Typography>
         <Typography variant="body1" color="#052A42">
           To analyze the data, click on the Analysis Page at the top
-        </Typography>
-        <Button
+        </Typography> */}
+      {/* <Button
           sx={{
             // color: "#052A42",
             marginTop: "1rem",
@@ -314,8 +276,8 @@ const Form = ({ fetchData }: { fetchData: () => Promise<void> }) => {
           onClick={openAlert}
         >
           Set a Sleep Goal
-        </Button>
-      </Box>
+        </Button> */}
+      {/* </Box> */}
     </Grid>
   );
 };

@@ -55,7 +55,7 @@ const Analysis = () => {
       <Navbar />
       <Statistics data={data} />
 
-      <Graph target={target} dataEntries={data} />
+      <Graph target={target} dataEntries={data} fetchTarget={fetchTarget} />
     </Box>
   );
 };

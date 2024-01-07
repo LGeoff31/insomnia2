@@ -11,11 +11,14 @@ import {
   Select,
   Stack,
   Typography,
+  TextField,
 } from "@mui/material";
 import React, { useState, useEffect } from "react";
 import { SleepEntry } from "../pages";
 import DialogTitle from "@mui/material/DialogTitle";
 import Dialog from "@mui/material/Dialog";
+import { auth } from "../utils/firebase";
+import { useAuthState } from "react-firebase-hooks/auth";
 
 const Statistics = ({ data }: { data: SleepEntry[] }) => {
   const [selectedOptions, setSelectedOptions] = useState({
@@ -30,7 +33,41 @@ const Statistics = ({ data }: { data: SleepEntry[] }) => {
   const [finalCorrelation, setFinalCorrelation] = useState<number>(0);
   const [finalCorrelationString, setFinalCorrelationString] =
     useState<string>("");
+  const [alertOpen, setAlertOpen] = useState(false);
+  const [targetSleep, setTargetSleep] = useState<number>(0);
+  const [target, setTarget] = useState<number>(0);
+  const [user] = useAuthState(auth);
 
+  const openAlert = () => {
+    setAlertOpen(true);
+  };
+
+  const closeAlert = () => {
+    setAlertOpen(false);
+  };
+
+  // useEffect(() => {
+  //   // Reload the page
+  //   window.location.reload();
+  // }, [targetSleep]);
+
+  const handleEnter = async () => {
+    setTarget(targetSleep);
+    setAlertOpen(false);
+    console.log(targetSleep, "FINAWFKMAWNFMAWF");
+    const formData = {
+      targetSleep: targetSleep,
+      user_id: user?.uid,
+    };
+    const response = await fetch("/api/createTarget", {
+      method: "POST",
+      body: JSON.stringify(formData),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    const dataResponse = await response.json();
+  };
   const handleOptionChange = (event: any, option: any) => {
     setSelectedOptions({ ...selectedOptions, [option]: event.target.value });
     console.log(selectedOptions);
@@ -226,7 +263,7 @@ const Statistics = ({ data }: { data: SleepEntry[] }) => {
         gap="2rem"
         marginBottom="4rem"
       >
-        <Box marginLeft="4rem">
+        <Box>
           <Typography
             marginTop="1rem"
             variant="body2"
@@ -234,13 +271,12 @@ const Statistics = ({ data }: { data: SleepEntry[] }) => {
           >
             Choose Two Measures to Calculate the Correlation!
           </Typography>
-          <Stack direction="column" display="flex" justifyContent={"center"}>
-            <Box margin="0 auto" paddingTop="1rem">
+          <Stack direction="column">
+            <Box display="flex" justifyContent={"center"} paddingTop="1rem">
               <Select
                 value={selectedOptions.option1}
                 onChange={(e) => handleOptionChange(e, "option1")}
               >
-                <MenuItem value="">Select Option 1</MenuItem>
                 <MenuItem value="Quality of Sleep">Quality of Sleep</MenuItem>
                 <MenuItem value="Hours of Sleep">Hours of Sleep</MenuItem>
                 <MenuItem value="Stress Level">Stress Level</MenuItem>
@@ -250,7 +286,6 @@ const Statistics = ({ data }: { data: SleepEntry[] }) => {
                 value={selectedOptions.option2}
                 onChange={(e) => handleOptionChange(e, "option2")}
               >
-                <MenuItem value="">Select Option 2</MenuItem>
                 <MenuItem value="Quality of Sleep">Quality of Sleep</MenuItem>
                 <MenuItem value="Hours of Sleep">Hours of Sleep</MenuItem>
                 <MenuItem value="Stress Level">Stress Level</MenuItem>
@@ -265,8 +300,30 @@ const Statistics = ({ data }: { data: SleepEntry[] }) => {
               >
                 Calculate Correlation
               </Button>
+
+              <Dialog open={alertOpen} onClose={closeAlert}>
+                <DialogTitle>
+                  Set Your Goal Number of Hours of Sleep
+                </DialogTitle>
+                <DialogContent>
+                  <TextField
+                    autoFocus
+                    margin="dense"
+                    value={targetSleep}
+                    onChange={(e) => setTargetSleep(parseInt(e.target.value))}
+                    label="Ex. 8"
+                    fullWidth
+                    variant="standard"
+                  />
+                </DialogContent>
+                <DialogActions>
+                  <Button onClick={closeAlert}>Cancel</Button>
+                  <Button onClick={handleEnter}>Enter</Button>
+                </DialogActions>
+              </Dialog>
             </Box>
           </Stack>
+
           <Dialog open={open} onClose={handleCloseStatistics}>
             <DialogTitle sx={{ background: "#bedce8" }}>
               {selectedOptions.option1}{" "}
@@ -336,21 +393,6 @@ const Statistics = ({ data }: { data: SleepEntry[] }) => {
             </DialogActions>
           </Dialog>
         </Box>
-
-        {/* <Box
-          width="12rem"
-          height="12rem"
-          borderRadius="8px"
-          boxShadow="0px 4px 10px rgba(0, 0, 0, 0.1)"
-          padding="2rem"
-          marginRight="4rem"
-          sx={{ background: "#faeda5" }}
-        >
-          <Typography fontWeight="bold">Note</Typography>
-          <Typography variant="body1" color="#052A42">
-            Click the Icons from the Legend to disable the line from the chart
-          </Typography>
-        </Box> */}
       </Grid>
     </Grid>
   );
